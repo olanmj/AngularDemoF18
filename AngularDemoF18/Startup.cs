@@ -1,9 +1,11 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using AngularDemoF18.Models;
 
 namespace AngularDemoF18
 {
@@ -26,6 +28,9 @@ namespace AngularDemoF18
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddDbContext<AngularDemoF18Context>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("AngularDemoF18Context")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,22 @@
+<h2>Product List</h2>
+<div *ngIf="!products">Loading...</div>
+<div *ngIf="products">
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Amount due</th>
+    </tr>
+    <tr *ngFor="let p of products">
+      <td>{{p.name}}</td>
+      <td>{{p.description}}</td>
+      <td>{{p.category}}</td>
+      <td>{{p.price | currency}}</td>
+      <td>{{p.quantity}}</td>
+      <td>{{p.amountDue | currency}}</td>
+    </tr>
+  </table>
+</div>
