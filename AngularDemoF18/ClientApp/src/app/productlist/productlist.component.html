@@ -1,7 +1,7 @@
 <h2>Product List</h2>
 <div *ngIf="!products">Loading...</div>
 <div *ngIf="products">
-  <table>
+  <table class="table">
     <tr>
       <th>Name</th>
       <th>Description</th>
@@ -14,9 +14,17 @@
       <td>{{p.name}}</td>
       <td>{{p.description}}</td>
       <td>{{p.category}}</td>
-      <td>{{p.price | currency}}</td>
+      <td class="price">{{p.price | number:'1.2'}}</td>
       <td>{{p.quantity}}</td>
       <td>{{p.amountDue | currency}}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>Total:</td>
+      <td>{{total | currency}}</td>
     </tr>
   </table>
 </div>
