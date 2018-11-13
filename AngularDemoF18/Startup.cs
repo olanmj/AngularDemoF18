@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using AngularDemoF18.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace AngularDemoF18
 {
@@ -21,6 +22,12 @@ namespace AngularDemoF18
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AngularDemoF18Context>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("AngularDemoF18Context")));
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<AngularDemoF18Context>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the Angular files will be served from this directory
@@ -28,9 +35,6 @@ namespace AngularDemoF18
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
-            services.AddDbContext<AngularDemoF18Context>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("AngularDemoF18Context")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
