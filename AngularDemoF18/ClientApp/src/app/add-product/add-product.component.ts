@@ -10,7 +10,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
-  model = {};
+  // model must be a typed object in order for the production
+  // build to work when publishing to Azure
+  model = new Product();
   result: any;
   posted = false;
 

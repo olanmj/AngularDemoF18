@@ -20,13 +20,13 @@ export class ProductComponent implements OnInit {
   }
 
 }
-
-export interface Product {
-  productID: number,
-  name: string,
-  description: string, 
-  category: string,
-  quantity: number,
-  price: number,
+// Changed to a class 
+export class Product {
+  productID: number;
+  name: string;
+  description: string; 
+  category: string;
+  quantity: number;
+  price: number;
   amountDue: number
 }

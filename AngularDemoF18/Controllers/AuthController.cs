@@ -15,10 +15,12 @@ namespace AngularDemoF18.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signinManager;
 
-        public AuthController(UserManager<User> userManager)
+        public AuthController(UserManager<User> userManager, SignInManager<User> signinman)
         {
             _userManager = userManager;
+            _signinManager = signinman;
         }
 
         [HttpGet]
@@ -32,7 +34,9 @@ namespace AngularDemoF18.Controllers
 
             User newUser = new User { UserName = user.UserName };
             var result = await _userManager.CreateAsync(newUser, user.Password);
-
+            var signinResult = await _signinManager.PasswordSignInAsync(newUser, user.Password, false, false);
+            var user2 = new User { UserName = user.UserName };
+            var test = await _signinManager.UserManager.FindByNameAsync(user.UserName);
             if (result.Succeeded)
             {
                 return Ok(new { Msg = "Registration succeeded", User = newUser.UserName, ID = newUser.Id });
@@ -40,5 +44,7 @@ namespace AngularDemoF18.Controllers
             return BadRequest(result);
 
         }
+
+
     }
 }
