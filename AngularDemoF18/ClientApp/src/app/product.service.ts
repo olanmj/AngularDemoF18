@@ -7,6 +7,7 @@ import { Product } from './product/product.component';
   providedIn: 'root'
 })
 export class ProductService {
+    [x: string]: any;
   baseUrl = 'api/products/';
 
   constructor(private http: HttpClient) { }
@@ -20,6 +21,6 @@ export class ProductService {
   }
 
   postProduct(product: Product) {
-
+    return this.http.post(this.baseUrl, product);
   }
 }

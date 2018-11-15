@@ -1,0 +1,31 @@
+<h3 *ngIf="posted">Success!</h3>
+
+<form (ngSubmit)="onsubmit(myform)" #myform="ngForm">
+  <div>
+    Name:
+    <input type="text" name="name" [(ngModel)]="model.name" required
+           #n="ngModel"/>
+    <div class="invalid" *ngIf="n.touched && n.invalid">Name is required</div>
+    <div class="invalid" *ngIf="n.value && n.value.length<3">{{model.name}} is too short</div>
+  </div> 
+  <div>
+    Description:
+    <input type="text" name="description" [(ngModel)]="model.description" />
+  </div>
+
+  <div>
+    Category:
+    <input type="text" name="category" [(ngModel)]="model.category" />
+  </div>
+
+  <div>
+    Quantity:
+    <input type="number" name="quantity" [(ngModel)]="model.quantity" />
+  </div>
+
+  <div>
+    Price:
+    <input type="number" name="price" [(ngModel)]="model.price" />
+  </div>
+  <button type="submit" [disabled]="myform.form.invalid">Submit</button>
+</form>
