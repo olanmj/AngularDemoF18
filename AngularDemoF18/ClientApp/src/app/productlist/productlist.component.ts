@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Product } from '../product/product.component';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-productlist',
@@ -10,8 +11,8 @@ import { Product } from '../product/product.component';
 export class ProductlistComponent implements OnInit {
   products: Product[];
   total = 0;
-
-  constructor(private service: ProductService) { }
+  prod: Product;
+  constructor(private service: ProductService, private dataService: DataService) { }
 
   ngOnInit() {
     this.service.getProducts().subscribe(data => {
@@ -20,7 +21,16 @@ export class ProductlistComponent implements OnInit {
         this.total += p.amountDue;
       }
     });
-    
+    this.dataService.currentMessage.subscribe((p: Product) => {
+      if (p) {
+        this.products.push(p);
+        window.location.reload();
+      }
+    });
   }
 
+ //onAdd(value) {
+ //  this.products.push(value);
+ //   window.location.reload();
+ //   }
 }
