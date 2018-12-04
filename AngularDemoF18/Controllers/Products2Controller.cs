@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using AngularDemoF18.Data;
 using AngularDemoF18.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AngularDemoF18.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class Products2Controller : ControllerBase
@@ -53,7 +55,7 @@ namespace AngularDemoF18.Controllers
             {
                 return NoContent();
             }
-            return BadRequest("Error saving chanages");
+            return BadRequest("Error saving changes");
         }
 
         [HttpPut("altupdate/{id}")]
@@ -70,7 +72,7 @@ namespace AngularDemoF18.Controllers
             {
                 return NoContent();
             }
-            return BadRequest("Error saving chanages");
+            return BadRequest("Error saving changes");
         }
     }
 }

@@ -9,6 +9,9 @@ using AngularDemoF18.Models;
 using Microsoft.AspNetCore.Identity;
 using AngularDemoF18.Data;
 using AutoMapper;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AngularDemoF18
 {
@@ -26,9 +29,32 @@ namespace AngularDemoF18
         {
             services.AddDbContext<AngularDemoF18Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("AngularDemoF18Context")));
+            services.AddIdentityCore<User>(options =>             {
+                // Default Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 2;
+            })
+            .AddEntityFrameworkStores<AngularDemoF18Context>()
+            .AddSignInManager<SignInManager<User>>();
 
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<AngularDemoF18Context>();
+            var key = Encoding.ASCII.GetBytes("Bogus Secret Key");
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+            //services.AddIdentity<User, IdentityRole>()
+            //    .AddEntityFrameworkStores<AngularDemoF18Context>();
 
             services.AddScoped<IProductRepository, ProductRepository>();
 
