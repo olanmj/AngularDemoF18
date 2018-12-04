@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using AngularDemoF18.Models;
 using Microsoft.AspNetCore.Identity;
+using AngularDemoF18.Data;
+using AutoMapper;
 
 namespace AngularDemoF18
 {
@@ -27,6 +29,10 @@ namespace AngularDemoF18
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AngularDemoF18Context>();
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddAutoMapper();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
